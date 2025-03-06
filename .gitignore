@@ -1,0 +1,29 @@
+# Ignore build directory
+build/
+
+# Ignore CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore compiled object files
+*.o
+*.obj
+
+# Ignore compiled binary files
+BackpackProject
+*.exe
+*.out
+*.app
+
+# Ignore precompiled headers
+*.gch
+*.pch
+
+# Ignore temporary files
+*.tmp
+*.log
+
+# Ignore editor-specific files
+.vscode/
