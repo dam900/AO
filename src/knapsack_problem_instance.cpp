@@ -1,9 +1,9 @@
 #ifndef BACKPACK
 #define BACKPACK
 
-#include "backpack.hpp"
+#include "knapsack_problem_instance.hpp"
 
-void Backpack::load(const BpItems items, uint capacity) {
+void KnapsackProblemInstance::load(const BpItems items, uint capacity) {
     for (uint idx = 0; idx < items.size(); idx++) {
         this->weights_.insert({idx, items[idx].first});
         this->prices_.insert({idx, items[idx].second});
@@ -12,15 +12,15 @@ void Backpack::load(const BpItems items, uint capacity) {
     this->numItems = items.size();
 }
 
-BpItem Backpack::getItem(uint id) const {
+BpItem KnapsackProblemInstance::getItem(uint id) const {
     return {weights_.at(id), prices_.at(id)};
 }
 
-uint Backpack::getItemWeight(uint id) const {
+uint KnapsackProblemInstance::getItemWeight(uint id) const {
     return weights_.at(id);
 }
 
-uint Backpack::getItemPrice(uint id) const {
+uint KnapsackProblemInstance::getItemPrice(uint id) const {
     return prices_.at(id);
 }
 
