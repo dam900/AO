@@ -9,11 +9,10 @@ using PriceMap = std::map<uint, uint>;
 
 class Backpack {
    public:
-    Backpack(const BpItems& items, uint capacity);
-    Backpack(std::string filename, uint capacity);
+    Backpack();
 
-    void load(const BpItems& items);
-    void load(std::string filename);
+    void load(const BpItems items, uint capacity);
+    void load(std::string filename, uint capacity);
 
     BpItem getItem(uint id) const;
     uint getItemWeight(uint id) const;
