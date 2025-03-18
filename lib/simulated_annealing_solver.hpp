@@ -5,9 +5,7 @@
 
 class SimulatedAnnealingSolver {
    public:
-    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance) {
-        sinstance_ = KnapsackSolutionInstance(pinstance_);
-    };
+    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance) {}
     KnapsackSolutionInstance solve(uint max_iter, double inital_temp);
 
    private:
