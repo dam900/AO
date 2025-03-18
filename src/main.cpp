@@ -10,7 +10,7 @@ int main() {
     KnapsackProblemInstance bp = KnapsackProblemInstance{};
     bp.load(items, 5);
 
-        for (const auto& item : bp) {
+    for (const auto& item : bp) {
         std::cout << "Item weight: " << item.first << ", value: " << item.second << std::endl;
     }
 }

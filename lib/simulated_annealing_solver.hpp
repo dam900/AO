@@ -1,13 +1,19 @@
+#include <memory>
+
 #include "knapsack_problem_instance.hpp"
 #include "knapsack_solution_instance.hpp"
 
 class SimulatedAnnealingSolver {
    public:
-    std::vector<uint> solve();
+    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance) {
+        sinstance_ = KnapsackSolutionInstance(pinstance_);
+    };
+    KnapsackSolutionInstance solve(uint max_iter, double inital_temp);
 
    private:
     KnapsackProblemInstance pinstance_;
     KnapsackSolutionInstance sinstance_;
+    std::unique_ptr<CoolingStrategy> cooling_strategy_;
 };
 
 /**

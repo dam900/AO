@@ -5,8 +5,12 @@
 
 class KnapsackSolutionInstance {
    public:
-    uint cost(const KnapsackProblemInstance& pinstance);
+    KnapsackSolutionInstance(KnapsackProblemInstance pinstance) : pinstance_(pinstance) {};
+    uint cost();
+    void make_change();  // zmiana wewnętrznego rozwiazania
+    void revert();       // cofnięcie zmiany
 
    private:
+    KnapsackProblemInstance pinstance_;
     std::vector<uint> csol_;
 };
