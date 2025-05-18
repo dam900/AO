@@ -1,3 +1,0 @@
-/home/bilimig/AO/AO/build/CMakeFiles/KnapsackProblemSolver.dir
-/home/bilimig/AO/AO/build/CMakeFiles/edit_cache.dir
-/home/bilimig/AO/AO/build/CMakeFiles/rebuild_cache.dir
