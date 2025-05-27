@@ -3,6 +3,20 @@
 #include "knapsack_problem_instance.hpp"
 #include "knapsack_solution_instance.hpp"
 
+/**
+ * Interface for cooling strategies
+ */
+class CoolingStrategy {
+    public:
+     /**
+      * Get the next temperature.
+      * This function is called after each iteration
+      * @param prev_t the previous temperature
+      */
+     virtual double next(double prev_t) = 0;
+ };
+
+ 
 class SimulatedAnnealingSolver {
    public:
     SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance) {}
@@ -14,18 +28,7 @@ class SimulatedAnnealingSolver {
     std::unique_ptr<CoolingStrategy> cooling_strategy_;
 };
 
-/**
- * Interface for cooling strategies
- */
-class CoolingStrategy {
-   public:
-    /**
-     * Get the next temperature.
-     * This function is called after each iteration
-     * @param prev_t the previous temperature
-     */
-    virtual double next(double prev_t) = 0;
-};
+
 
 /**
  * Linear cooling strategy

@@ -26,3 +26,4 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint max_iter, double i
     }
 
     return best;
+}
