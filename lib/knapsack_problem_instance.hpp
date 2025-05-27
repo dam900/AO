@@ -2,16 +2,23 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <string>
+#include <utility>
+#include <tuple>
+#include <cstdint> 
 
-using BpItem = std::pair<uint, uint>;
+using BpItem = std::pair<uint64_t, uint64_t>;
 using BpItems = std::vector<BpItem>;
-using WeightMap = std::map<uint, uint>;
-using PriceMap = std::map<uint, uint>;
+using WeightMap = std::map<uint64_t, uint64_t>;
+using PriceMap = std::map<uint64_t, uint64_t>;
+
+std::tuple<BpItems, uint64_t> load_data_from_file(const std::string& filename);
+std::pair<uint64_t, BpItems> load_solution_from_file(const std::string& filename);
 
 class KnapsackProblemInstance {
    public:
-    void load(const BpItems items, uint capacity);
-    void load(std::string filename, uint capacity);
+    void load(const BpItems items, uint64_t capacity);
+    void load(std::string filename, uint64_t capacity);
 
     class Iterator {
        public:
@@ -44,12 +51,12 @@ class KnapsackProblemInstance {
         return Iterator(weights_.cend(), prices_.cend());
     }
 
-    BpItem getItem(uint id) const;
-    uint getItemWeight(uint id) const;
-    uint getItemPrice(uint id) const;
+    BpItem getItem(uint64_t id) const;
+    uint64_t getItemWeight(uint64_t id) const;
+    uint64_t getItemPrice(uint64_t id) const;
 
-    uint capacity;
-    uint numItems;
+    uint64_t capacity;
+    uint64_t numItems;
 
    private:
     WeightMap weights_;

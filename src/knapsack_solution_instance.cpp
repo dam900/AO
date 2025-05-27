@@ -2,18 +2,19 @@
 
 #include <algorithm>
 #include <numeric>
+#include <optional>
 #include <random>
 
 
-uint KnapsackSolutionInstance::cost() {
-    return std::accumulate(this->csol_.begin(), this->csol_.end(), 0, [this](uint sum, const auto& item) {
+uint64_t KnapsackSolutionInstance::cost() {
+    return std::accumulate(this->csol_.begin(), this->csol_.end(), 0, [this](uint64_t sum, const auto& item) {
         return sum + pinstance_.getItemPrice(item);
     });
 }
 
-std::vector<std::pair<uint, double>> KnapsackSolutionInstance::get_sorted_items_by_ratio() const {
-    std::vector<std::pair<uint, double>> sorted_items;
-    for (uint i = 0; i < pinstance_.numItems; i++) {
+std::vector<std::pair<uint64_t, double>> KnapsackSolutionInstance::get_sorted_items_by_ratio() const {
+    std::vector<std::pair<uint64_t, double>> sorted_items;
+    for (uint64_t i = 0; i < pinstance_.numItems; i++) {
         double ratio = static_cast<double>(pinstance_.getItemPrice(i)) / pinstance_.getItemWeight(i);
         sorted_items.emplace_back(i, ratio);
     }
@@ -23,17 +24,19 @@ std::vector<std::pair<uint, double>> KnapsackSolutionInstance::get_sorted_items_
     return sorted_items;
 }
 
-void KnapsackSolutionInstance::make_change(const std::vector<std::pair<uint, double>>& sorted_items) {
+void KnapsackSolutionInstance::make_change(const std::vector<std::pair<uint64_t, double>>& sorted_items) {
     prev_solution_ = csol_;
 
-    uint current_weight = 0;
+    uint64_t current_weight = 0;
     for (const auto& item : csol_) {
         current_weight += pinstance_.getItemWeight(item);
     }
 
+    std::optional<uint64_t> removed_item_id;
+
     for (const auto& item : sorted_items) {
-        uint item_id = item.first;
-        uint item_weight = pinstance_.getItemWeight(item_id);
+        uint64_t item_id = item.first;
+        uint64_t item_weight = pinstance_.getItemWeight(item_id);
 
         if (std::find(csol_.begin(), csol_.end(), item_id) == csol_.end() && current_weight + item_weight <= pinstance_.capacity) {
             csol_.push_back(item_id);
@@ -46,14 +49,25 @@ void KnapsackSolutionInstance::make_change(const std::vector<std::pair<uint, dou
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, csol_.size() - 1);
 
-        uint random_index = dis(gen);
+        uint64_t random_index = dis(gen);
+        removed_item_id = csol_[random_index];
         current_weight -= pinstance_.getItemWeight(csol_[random_index]);
         csol_.erase(csol_.begin() + random_index);
     }
 
     for (const auto& item : sorted_items) {
-        uint item_id = item.first;
-        uint item_weight = pinstance_.getItemWeight(item_id);
+        uint64_t item_id = item.first;
+        uint64_t item_weight = pinstance_.getItemWeight(item_id);
+        uint64_t item_price = pinstance_.getItemPrice(item_id);
+
+        if (removed_item_id.has_value()) {
+            uint64_t removed_weight = pinstance_.getItemWeight(removed_item_id.value());
+            uint64_t removed_price = pinstance_.getItemPrice(removed_item_id.value());
+
+            if (item_weight == removed_weight && item_price == removed_price) {
+                continue;
+            }
+        }
 
         if (std::find(csol_.begin(), csol_.end(), item_id) == csol_.end() && current_weight + item_weight <= pinstance_.capacity) {
             csol_.push_back(item_id);

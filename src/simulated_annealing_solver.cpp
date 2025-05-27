@@ -3,14 +3,14 @@
 #include <math.h>
 #include <random>
 
-KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint max_iter, double initial_temp) {
+KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint64_t max_iter, double initial_temp) {
     auto best = sinstance_;
     auto best_cost = best.cost();
     double t = initial_temp;
 
     auto sorted_items = best.get_sorted_items_by_ratio();
 
-    for (uint i = 0; i <= max_iter; i++) {
+    for (uint64_t i = 0; i <= max_iter; i++) {
         best.make_change(sorted_items);
         auto current_cost = best.cost();
         auto delta = current_cost - best_cost;
@@ -23,6 +23,7 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint max_iter, double i
             best.revert();
         }
         t = cooling_strategy_->next(t);
+        //printf("Iteration %lu, Temperature: %.2f, Best Cost: %lu\n", i, t, best_cost);
     }
 
     return best;

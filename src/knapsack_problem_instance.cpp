@@ -2,9 +2,13 @@
 #define BACKPACK
 
 #include "knapsack_problem_instance.hpp"
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
+#include <tuple>
 
-void KnapsackProblemInstance::load(const BpItems items, uint capacity) {
-    for (uint idx = 0; idx < items.size(); idx++) {
+void KnapsackProblemInstance::load(const BpItems items, uint64_t capacity) {
+    for (uint64_t idx = 0; idx < items.size(); idx++) {
         this->weights_.insert({idx, items[idx].first});
         this->prices_.insert({idx, items[idx].second});
     }
@@ -12,16 +16,64 @@ void KnapsackProblemInstance::load(const BpItems items, uint capacity) {
     this->numItems = items.size();
 }
 
-BpItem KnapsackProblemInstance::getItem(uint id) const {
+BpItem KnapsackProblemInstance::getItem(uint64_t id) const {
     return {weights_.at(id), prices_.at(id)};
 }
 
-uint KnapsackProblemInstance::getItemWeight(uint id) const {
+uint64_t KnapsackProblemInstance::getItemWeight(uint64_t id) const {
     return weights_.at(id);
 }
 
-uint KnapsackProblemInstance::getItemPrice(uint id) const {
+uint64_t KnapsackProblemInstance::getItemPrice(uint64_t id) const {
     return prices_.at(id);
+}
+
+std::tuple<BpItems, uint64_t> load_data_from_file(const std::string& filename) {
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file: " + filename);
+    }
+
+    BpItems items;
+    uint64_t num_items;
+    uint64_t capacity;
+
+    file >> num_items;
+
+    for (uint64_t i = 0; i < num_items; ++i) {
+        uint64_t id, profit, weight;
+        file >> id >> profit >> weight;
+        items.emplace_back(weight, profit);
+    }
+
+    file >> capacity;
+
+    file.close();
+
+    return {items, capacity};
+}
+
+std::pair<uint64_t, BpItems> load_solution_from_file(const std::string& filename) {
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file: " + filename);
+    }
+
+    BpItems solution_items;
+    uint64_t total_profit;
+
+    file >> total_profit;
+
+    uint64_t profit, weight;
+    while (file >> profit >> weight) {
+        solution_items.emplace_back(weight, profit);
+    }
+
+    file.close();
+
+    return {total_profit, solution_items};
 }
 
 #endif

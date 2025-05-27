@@ -1,5 +1,6 @@
 # Ignore build directory
 build/
+./build/
 
 # Ignore CMake generated files
 CMakeFiles/
@@ -16,6 +17,7 @@ BackpackProject
 *.exe
 *.out
 *.app
+*.in
 
 # Ignore precompiled headers
 *.gch
