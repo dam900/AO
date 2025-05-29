@@ -5,13 +5,27 @@
 #include <optional>
 #include <random>
 
-
 uint64_t KnapsackSolutionInstance::cost() {
     return std::accumulate(this->csol_.begin(), this->csol_.end(), 0, [this](uint64_t sum, const auto& item) {
         return sum + pinstance_.getItemPrice(item);
     });
 }
 
+uint64_t KnapsackSolutionInstance::weight() {
+    uint64_t current_weight = 0;
+    for (const auto& item : csol_) {
+        current_weight += pinstance_.getItemWeight(item);
+    }
+    return current_weight;
+}
+
+std::vector<uint64_t> KnapsackSolutionInstance::get_sol() {
+    return csol_;
+}
+
+std::vector<uint64_t> KnapsackSolutionInstance::get_prev_sol() {
+    return prev_solution_;
+}
 std::vector<std::pair<uint64_t, double>> KnapsackSolutionInstance::get_sorted_items_by_ratio() const {
     std::vector<std::pair<uint64_t, double>> sorted_items;
     for (uint64_t i = 0; i < pinstance_.numItems; i++) {
@@ -25,12 +39,8 @@ std::vector<std::pair<uint64_t, double>> KnapsackSolutionInstance::get_sorted_it
 }
 
 void KnapsackSolutionInstance::make_change(const std::vector<std::pair<uint64_t, double>>& sorted_items) {
-    prev_solution_ = csol_;
-
-    uint64_t current_weight = 0;
-    for (const auto& item : csol_) {
-        current_weight += pinstance_.getItemWeight(item);
-    }
+    std::copy(csol_.begin(), csol_.end(), std::back_inserter(prev_solution_));
+    uint64_t current_weight = weight();
 
     std::optional<uint64_t> removed_item_id;
 
@@ -77,5 +87,6 @@ void KnapsackSolutionInstance::make_change(const std::vector<std::pair<uint64_t,
 }
 
 void KnapsackSolutionInstance::revert() {
-    csol_ = prev_solution_;
+    // csol_ = prev_solution_;
+    std::copy(prev_solution_.begin(), prev_solution_.end(), std::back_inserter(csol_));
 }
