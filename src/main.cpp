@@ -10,17 +10,13 @@
 
 int main() {
     try {
-        // Wczytaj dane problemu z pliku test.in
         auto [items, capacity] = load_data_from_file("test.in");
 
-        // Wczytaj rozwiązanie z pliku outp.out
         auto [optimal_price, solution_items] = load_solution_from_file("outp.out");
 
-        // Wyświetl dane problemu
         std::cout << "\nProblem data:" << std::endl;
         std::cout << "Capacity: " << capacity << std::endl;
 
-        // Wyświetl rozwiązanie
         std::cout << "\nSolution:" << std::endl;
         std::cout << "Total profit: " << optimal_price << std::endl;
 
@@ -34,7 +30,7 @@ int main() {
         SimulatedAnnealingSolver solver(std::move(cooling_strategy), bp);
 
         uint64_t max_iter = 1000;
-        double initial_temp = 1000.0;
+        double initial_temp = 100.0;
         auto solution = solver.solve(max_iter, initial_temp);
 
         std::cout << "Best solution found: " << solution.cost() << std::endl;
