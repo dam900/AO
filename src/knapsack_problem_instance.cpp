@@ -6,6 +6,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <tuple>
+#include <algorithm>
 
 void KnapsackProblemInstance::load(const BpItems items, uint64_t capacity) {
     for (uint64_t idx = 0; idx < items.size(); idx++) {
@@ -26,6 +27,22 @@ uint64_t KnapsackProblemInstance::getItemWeight(uint64_t id) const {
 
 uint64_t KnapsackProblemInstance::getItemPrice(uint64_t id) const {
     return prices_.at(id);
+}
+
+std::vector<std::pair<uint64_t, double>> KnapsackProblemInstance::get_sorted_items_by_ratio() const {
+    std::vector<std::pair<uint64_t, double>> items_with_ratio;
+
+    for (const auto& [id, weight] : weights_) {
+        double ratio = static_cast<double>(prices_.at(id)) / weight;
+        items_with_ratio.emplace_back(id, ratio);
+    }
+    
+    std::sort(items_with_ratio.begin(), items_with_ratio.end(),
+              [](const std::pair<uint64_t, double>& a, const std::pair<uint64_t, double>& b) {
+                  return a.second > b.second;
+              });
+
+    return items_with_ratio;
 }
 
 std::tuple<BpItems, uint64_t> load_data_from_file(const std::string& filename) {

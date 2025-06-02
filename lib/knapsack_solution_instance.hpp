@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 
 #include "knapsack_problem_instance.hpp"
 
@@ -11,9 +12,9 @@ class KnapsackSolutionInstance {
     uint64_t cost();
     void revert();  // Undo the last change
     uint64_t weight();
-    void make_change(const std::vector<std::pair<uint64_t, double>>& sorted_items);
-    std::vector<uint64_t> get_sol();  // Current solution (list of item IDs)
-    std::vector<uint64_t> get_prev_sol();
+    void make_change(std::set<std::vector<bool>>& checked_solutions);
+    std::vector<bool> get_sol();  // Current solution (list of item IDs)
+    std::vector<bool> get_prev_sol();
 
    private:
     KnapsackProblemInstance pinstance_;

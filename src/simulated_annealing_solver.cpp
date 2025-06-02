@@ -11,10 +11,16 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint64_t max_iter, doub
     auto best_cost = best.cost();
     auto global_best_cost = best_cost;
     double t = initial_temp;
-
+    auto sorted_items = pinstance_.get_sorted_items_by_ratio();
+    printf("Sorted items: ");
+    for (const auto& item : sorted_items) {
+        printf("id: %li , ratio: %f", item.first, item.second);
+        printf("\n");
+    }
+    std::set<std::vector<bool>> checked_solutions;
 
     for (uint64_t i = 0; i <= max_iter; i++) {
-        best.make_change();
+        best.make_change(checked_solutions);
 
         auto current_cost = best.cost();
         auto delta = current_cost - best_cost;
@@ -32,10 +38,12 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint64_t max_iter, doub
             best.revert();
         }
 
+        checked_solutions.insert(best.get_sol());
+
         t = cooling_strategy_->next(t);
 
-        // Debugowanie
-        printf("Iteration %lu, Temperature: %.2f, Best Cost: %lu, Global Best Cost: %lu\n", i, t, best_cost, global_best_cost);
+        printf("Iteration %lu, Weight: %lu, Best Cost: %lu, Global Best Cost: %lu\n",
+               i, best.weight(), best_cost, global_best_cost);
     }
 
     return global_best;

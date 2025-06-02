@@ -7,6 +7,10 @@ CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
 Makefile
+knapPI_1_100_1000_1
+knapPI_1_500_1000_1
+knapPI_2_2000_1000_1
+
 
 # Ignore compiled object files
 *.o

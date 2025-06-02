@@ -59,6 +59,8 @@ class KnapsackProblemInstance {
     uint64_t capacity;
     uint64_t numItems;
 
+    std::vector<std::pair<uint64_t, double>> get_sorted_items_by_ratio() const;
+    
    private:
     WeightMap weights_;
     PriceMap prices_;
