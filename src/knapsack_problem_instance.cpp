@@ -76,4 +76,35 @@ std::pair<uint64_t, BpItems> load_solution_from_file(const std::string& filename
     return {total_profit, solution_items};
 }
 
+BpItems load_from_file_01(const std::string& filename) {
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file: " + filename);
+    }
+
+    BpItems items;
+    uint64_t value, weight;
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+
+        if (ss >> value >> weight) {
+            items.emplace_back(weight, value);
+        } else {
+            break;
+        }
+    }
+
+    file.close();
+
+    std::cout << "Loaded " << items.size() << " items from file: " << filename << std::endl;
+    for (size_t i = 0; i < items.size(); ++i) {
+        std::cout << "Item " << i << ": Weight = " << items[i].first << ", Value = " << items[i].second << std::endl;
+    }
+
+    return items;
+}
+
 #endif

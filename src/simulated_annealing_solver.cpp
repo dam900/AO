@@ -13,19 +13,19 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(uint64_t max_iter, doub
     double t = initial_temp;
 
     auto sorted_items = best.get_sorted_items_by_ratio();
-    std::set<std::vector<uint64_t>> checked_solutions;
+    // std::set<std::vector<uint64_t>> checked_solutions;
 
     for (uint64_t i = 0; i <= max_iter; i++) {
         best.make_change(sorted_items);
 
-        auto current_solution = best.get_sol();
-        std::sort(current_solution.begin(), current_solution.end());
-        if (checked_solutions.find(current_solution) != checked_solutions.end()) {
-            best.revert();
-            continue;
-        }
+        // auto current_solution = best.get_sol();
+        // std::sort(current_solution.begin(), current_solution.end());
+        // if (checked_solutions.find(current_solution) != checked_solutions.end()) {
+        //     best.revert();
+        //     continue;
+        // }
 
-        checked_solutions.insert(current_solution);
+        // checked_solutions.insert(current_solution);
 
         auto current_cost = best.cost();
         auto delta = current_cost - best_cost;

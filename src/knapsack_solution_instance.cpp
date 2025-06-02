@@ -65,25 +65,47 @@ void KnapsackSolutionInstance::make_change(const std::vector<std::pair<uint64_t,
         csol_.erase(csol_.begin() + random_index);
     }
 
-    for (const auto& item : sorted_items) {
-        uint64_t item_id = item.first;
-        uint64_t item_weight = pinstance_.getItemWeight(item_id);
-        uint64_t item_price = pinstance_.getItemPrice(item_id);
+    // for (const auto& item : sorted_items) {
+    //     uint64_t item_id = item.first;
+    //     uint64_t item_weight = pinstance_.getItemWeight(item_id);
+    //     uint64_t item_price = pinstance_.getItemPrice(item_id);
 
-        if (removed_item_id.has_value()) {
-            uint64_t removed_weight = pinstance_.getItemWeight(removed_item_id.value());
-            uint64_t removed_price = pinstance_.getItemPrice(removed_item_id.value());
+    //     if (removed_item_id.has_value()) {
+    //         uint64_t removed_weight = pinstance_.getItemWeight(removed_item_id.value());
+    //         uint64_t removed_price = pinstance_.getItemPrice(removed_item_id.value());
 
-            if (item_weight == removed_weight && item_price == removed_price) {
-                continue;
-            }
-        }
+    //         if (item_weight == removed_weight && item_price == removed_price) {
+    //             continue;
+    //         }
+    //     }
 
-        if (std::find(csol_.begin(), csol_.end(), item_id) == csol_.end() && current_weight + item_weight <= pinstance_.capacity) {
+    //     if (std::find(csol_.begin(), csol_.end(), item_id) == csol_.end() && current_weight + item_weight <= pinstance_.capacity) {
+    //         csol_.push_back(item_id);
+    //         current_weight += item_weight;
+    //     }
+    // }
+
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> dis(0, sorted_items.size() - 1);
+
+for (size_t i = 0; i < 100; ++i) {
+
+    uint64_t random_index = dis(gen);
+    uint64_t item_id = sorted_items[random_index].first;
+    uint64_t item_weight = pinstance_.getItemWeight(item_id);
+    uint64_t item_price = pinstance_.getItemPrice(item_id);
+
+    if (std::find(csol_.begin(), csol_.end(), item_id) == csol_.end())
+    {
+        if (current_weight + item_weight <= pinstance_.capacity) {
             csol_.push_back(item_id);
             current_weight += item_weight;
         }
     }
+}
+
+
 }
 
 void KnapsackSolutionInstance::revert() {

@@ -14,6 +14,7 @@ using PriceMap = std::map<uint64_t, uint64_t>;
 
 std::tuple<BpItems, uint64_t> load_data_from_file(const std::string& filename);
 std::pair<uint64_t, BpItems> load_solution_from_file(const std::string& filename);
+BpItems load_from_file_01(const std::string& filename);
 
 class KnapsackProblemInstance {
    public:
