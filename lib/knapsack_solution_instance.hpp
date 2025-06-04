@@ -9,9 +9,9 @@
 class KnapsackSolutionInstance {
    public:
     KnapsackSolutionInstance(KnapsackProblemInstance pinstance) : pinstance_(pinstance) {};
-    uint64_t cost();
+    int cost();
     void revert();  // Undo the last change
-    uint64_t weight();
+    int weight();
     void make_change(std::set<std::vector<bool>>& checked_solutions);
     std::vector<bool> get_sol();  // Current solution (list of item IDs)
     std::vector<bool> get_prev_sol();

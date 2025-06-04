@@ -11,8 +11,8 @@
 //     });
 // }
 
-uint64_t KnapsackSolutionInstance::weight() {
-    uint64_t weight = 0;
+int KnapsackSolutionInstance::weight() {
+    int weight = 0;
     for (size_t i = 0; i < csol_.size(); i++) {
         if (csol_[i]) {
             weight += pinstance_.getItemWeight(i);
@@ -103,8 +103,8 @@ void KnapsackSolutionInstance::revert() {
     std::copy(prev_solution_.begin(), prev_solution_.end(), std::back_inserter(csol_));
 }
 
-uint64_t KnapsackSolutionInstance::cost() {
-    uint64_t sum = 0;
+int KnapsackSolutionInstance::cost() {
+    int sum = 0;
     for (size_t i = 0; i < csol_.size(); i++) {
         if (csol_[i]) {
             sum += pinstance_.getItemPrice(i);
@@ -121,7 +121,7 @@ void KnapsackSolutionInstance::make_change(std::set<std::vector<bool>>& checked_
     std::uniform_int_distribution<> dis(0, pinstance_.numItems - 1);
 
     auto sorted_items = pinstance_.get_sorted_items_by_ratio();
-    uint64_t current_weight = weight();
+    int current_weight = weight();
 
     double action_prob = prob_dist(gen);
 
@@ -130,8 +130,8 @@ void KnapsackSolutionInstance::make_change(std::set<std::vector<bool>>& checked_
 
         if (add_prob <= 0.5) {
             for (const auto& item : sorted_items) {
-                uint64_t item_id = item.first;
-                uint64_t item_weight = pinstance_.getItemWeight(item_id);
+                int item_id = item.first;
+                int item_weight = pinstance_.getItemWeight(item_id);
 
                 if (!csol_[item_id] && current_weight + item_weight <= pinstance_.capacity) {
                     csol_[item_id] = true;
@@ -147,8 +147,8 @@ void KnapsackSolutionInstance::make_change(std::set<std::vector<bool>>& checked_
             }
         } else {
             for (size_t i = 0; i < 100; ++i) {
-                uint64_t random_index = dis(gen);
-                uint64_t item_weight = pinstance_.getItemWeight(random_index);
+                int random_index = dis(gen);
+                int item_weight = pinstance_.getItemWeight(random_index);
 
                 if (!csol_[random_index] && current_weight + item_weight <= pinstance_.capacity) {
                     csol_[random_index] = true;
@@ -164,7 +164,7 @@ void KnapsackSolutionInstance::make_change(std::set<std::vector<bool>>& checked_
             }
         }
     } else {
-        std::vector<uint64_t> selected_items;
+        std::vector<int> selected_items;
         for (size_t i = 0; i < csol_.size(); ++i) {
             if (csol_[i]) {
                 selected_items.push_back(i);
@@ -175,7 +175,7 @@ void KnapsackSolutionInstance::make_change(std::set<std::vector<bool>>& checked_
             double remove_prob = prob_dist(gen);
 
             if (remove_prob <= 0.5) {
-                uint64_t worst_item_id = selected_items[0];
+                int worst_item_id = selected_items[0];
                 double worst_ratio = static_cast<double>(pinstance_.getItemPrice(worst_item_id)) /
                                      pinstance_.getItemWeight(worst_item_id);
 
@@ -192,7 +192,7 @@ void KnapsackSolutionInstance::make_change(std::set<std::vector<bool>>& checked_
                 current_weight -= pinstance_.getItemWeight(worst_item_id);
             } else {
                 std::uniform_int_distribution<> remove_dis(0, selected_items.size() - 1);
-                uint64_t random_item_id = selected_items[remove_dis(gen)];
+                int random_item_id = selected_items[remove_dis(gen)];
 
                 csol_[random_item_id] = false;
                 current_weight -= pinstance_.getItemWeight(random_item_id);

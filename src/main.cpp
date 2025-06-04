@@ -10,22 +10,22 @@
 
 int main() {
     try {
-        BpItems items = load_from_file_01("knapPI_1_500_1000_1");
-        auto capacity = 1000;
+        auto data = load_from_file_01("/home/damian/Downloads/instances_01_KP/large_scale/knapPI_1_500_1000_1");
+        auto capacity = data.second;
 
         std::cout << "\nProblem data:" << std::endl;
-        std::cout << "Capacity: " << capacity << std::endl;
+        std::cout << "Capacity: " << data.second << std::endl;
 
         KnapsackProblemInstance bp = KnapsackProblemInstance{};
 
-        bp.load(items, capacity);
+        bp.load(data.first, data.second);
 
         // auto cooling_strategy = std::make_unique<LogarithmicCoolingStrategy>(0.01);
         auto cooling_strategy = std::make_unique<GeometricCoolingStrategy>(0.997);
 
         SimulatedAnnealingSolver solver(std::move(cooling_strategy), bp);
 
-        uint64_t max_iter = 10000;
+        uint64_t max_iter = 15000;
         double initial_temp = 1000.0;
         auto solution = solver.solve(max_iter, initial_temp);
         std::cout << "Best solution found: " << solution.cost() << std::endl;
