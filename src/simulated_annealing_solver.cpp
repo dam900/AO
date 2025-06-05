@@ -9,17 +9,20 @@
 
 KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double starting_probabilty) {
     auto best = sinstance_;
-    auto global_best = sinstance_;
+    best.initialize();
+    auto global_best = best;
     auto best_cost = best.cost();
     auto global_best_cost = best_cost;
     auto self_tune_sol = KnapsackSolutionInstance(pinstance_);
 
+
+    // Self-tuning phase to adjust the cooling rate
     std::vector<int> deltas = std::vector<int>(SELF_TUNE_ITERATIONS, 0);
 
     for (size_t i = 0; i < SELF_TUNE_ITERATIONS; i++) {
         self_tune_sol.make_change();
         auto current_cost = self_tune_sol.cost();
-        auto delta = current_cost - 10000;
+        auto delta = current_cost - best_cost;
         deltas[i] = std::abs(delta);
     }
 
@@ -33,6 +36,8 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
         std::cerr << "Cooling strategy is not GeometricCoolingStrategy, cannot set cooling rate." << std::endl;
         return global_best;
     }
+
+    // end self-tuning phase
 
     for (size_t i = 0; i <= max_iter; i++) {
         best.make_change();

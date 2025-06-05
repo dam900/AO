@@ -15,6 +15,7 @@ class KnapsackSolutionInstance {
     int weight();
     std::vector<bool> getSol();
     std::vector<bool> getPSol();
+    void initialize();
 
    private:
 

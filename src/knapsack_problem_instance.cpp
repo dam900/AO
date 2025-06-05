@@ -43,11 +43,6 @@ void KnapsackProblemInstance::load(std::string& filename) {
 
     file.close();
 
-    std::cout << "Loaded " << items.size() << " items from file: " << filename << std::endl;
-    for (size_t i = 0; i < items.size(); ++i) {
-        std::cout << "Item " << i << ": Weight = " << items[i].first << ", Value = " << items[i].second << std::endl;
-    }
-
     load(items, capacity);
 }
 

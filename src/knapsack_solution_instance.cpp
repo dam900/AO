@@ -33,6 +33,23 @@ std::vector<bool> KnapsackSolutionInstance::getPSol() {
     return prev_solution_;
 }
 
+void KnapsackSolutionInstance::initialize()
+{
+    auto sorted_items = pinstance_.sorted_by_ratio();
+    int current_weight = 0;
+    for (const auto& item : sorted_items) {
+        int item_id = item.first;
+        int item_weight = pinstance_.getItemWeight(item_id);
+
+        if (current_weight + item_weight <= pinstance_.capacity) {
+            csol_[item_id] = true;
+            current_weight += item_weight;
+        } else {
+            csol_[item_id] = false;
+        }
+    }
+}
+
 void KnapsackSolutionInstance::revert() {
     std::copy(prev_solution_.begin(), prev_solution_.end(), std::back_inserter(csol_));
 }
