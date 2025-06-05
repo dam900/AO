@@ -11,16 +11,9 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double in
     auto best_cost = best.cost();
     auto global_best_cost = best_cost;
     double t = initial_temp;
-    auto sorted_items = pinstance_.get_sorted_items_by_ratio();
-    printf("Sorted items: ");
-    for (const auto& item : sorted_items) {
-        printf("id: %d , ratio: %f", item.first, item.second);
-        printf("\n");
-    }
-    std::set<std::vector<bool>> checked_solutions;
 
     for (int i = 0; i <= max_iter; i++) {
-        best.make_change(checked_solutions);
+        best.make_change();
 
         auto current_cost = best.cost();
         auto delta = current_cost - best_cost;
@@ -38,8 +31,6 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double in
             global_best = best;
             global_best_cost = current_cost;
         }
-
-        checked_solutions.insert(best.get_sol());
 
         t = cooling_strategy_->next(t);
 
