@@ -50,6 +50,9 @@ class GeometricCoolingStrategy : public CoolingStrategy {
    public:
     GeometricCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
     double next(double prev_t) override { return prev_t * cooling_rate; }
+    void setCoolingRate(double new_rate) {
+        cooling_rate = new_rate;
+    }
 
    private:
     double cooling_rate;

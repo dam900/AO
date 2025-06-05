@@ -12,25 +12,25 @@ int main() {
     try {
 
         int max_iter = 1000;
-        double initial_temp = 1000.0;
+        double initial_temp = 1000;
         auto optimum = 28857;
 
         std::string path = "/home/damian/Downloads/instances_01_KP/large_scale/knapPI_1_500_1000_1"; 
         KnapsackProblemInstance bp = KnapsackProblemInstance{};
         bp.load(path);
 
-        auto cooling_strategy = std::make_unique<GeometricCoolingStrategy>(0.997);
+        auto cooling_strategy = std::make_unique<GeometricCoolingStrategy>(1);
         auto capacity = bp.capacity;
 
         SimulatedAnnealingSolver solver(std::move(cooling_strategy), bp);
-        auto solution = solver.solve(max_iter, initial_temp);
+        auto solution = solver.solve(max_iter, 0.8);
 
         std::cout << "Best solution found: " << solution.cost() << std::endl;
         std::cout << "Best solution weight: " << solution.weight() << std::endl;
         std::cout << "Is under the wieght limit: " << ((solution.weight() < capacity) ? "True" : "False") << std::endl;
-        std::cout << "By how much: " << static_cast<int>(capacity) - static_cast<int>(solution.weight()) << std::endl;
+        std::cout << "By how much: " << capacity - solution.weight() << std::endl;
         std::cout << "Optimal solution: " << optimum << std::endl;
-        std::cout << "Difference from optimum: " << static_cast<int>(optimum) - static_cast<int>(solution.cost()) << std::endl;
+        std::cout << "Difference from optimum: " << optimum - solution.cost() << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
