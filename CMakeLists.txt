@@ -13,3 +13,12 @@ add_executable(KnapsackProblemSolver
 )
 
 include_directories(${PROJECT_SOURCE_DIR} lib)
+
+add_custom_target(
+    run
+    COMMAND $<TARGET_FILE:KnapsackProblemSolver>
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Building and running the Knapsack Problem Solver"
+)
+
+add_dependencies(run KnapsackProblemSolver)
