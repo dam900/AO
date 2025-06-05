@@ -1,16 +1,25 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
+#include <set>
 
 #include "knapsack_problem_instance.hpp"
 
 class KnapsackSolutionInstance {
    public:
     KnapsackSolutionInstance(KnapsackProblemInstance pinstance) : pinstance_(pinstance) {};
-    uint cost();
-    void make_change();  // zmiana wewnętrznego rozwiazania
-    void revert();       // cofnięcie zmiany
+    void revert(); 
+    void make_change();
+    int cost();
+    int weight();
+    std::vector<bool> getSol();
+    std::vector<bool> getPSol();
+    void initialize();
 
    private:
+
     KnapsackProblemInstance pinstance_;
-    std::vector<uint> csol_;
+    std::vector<bool> csol_ = std::vector<bool>(pinstance_.numItems, false);         
+    std::vector<bool> prev_solution_;  
 };

@@ -3,17 +3,6 @@
 #include "knapsack_problem_instance.hpp"
 #include "knapsack_solution_instance.hpp"
 
-class SimulatedAnnealingSolver {
-   public:
-    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance) {}
-    KnapsackSolutionInstance solve(uint max_iter, double inital_temp);
-
-   private:
-    KnapsackProblemInstance pinstance_;
-    KnapsackSolutionInstance sinstance_;
-    std::unique_ptr<CoolingStrategy> cooling_strategy_;
-};
-
 /**
  * Interface for cooling strategies
  */
@@ -25,6 +14,17 @@ class CoolingStrategy {
      * @param prev_t the previous temperature
      */
     virtual double next(double prev_t) = 0;
+};
+
+class SimulatedAnnealingSolver {
+   public:
+    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance) {}
+    KnapsackSolutionInstance solve(int max_iter, double inital_temp);
+
+   private:
+    KnapsackProblemInstance pinstance_;
+    KnapsackSolutionInstance sinstance_;
+    std::unique_ptr<CoolingStrategy> cooling_strategy_;
 };
 
 /**
@@ -50,6 +50,9 @@ class GeometricCoolingStrategy : public CoolingStrategy {
    public:
     GeometricCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
     double next(double prev_t) override { return prev_t * cooling_rate; }
+    void setCoolingRate(double new_rate) {
+        cooling_rate = new_rate;
+    }
 
    private:
     double cooling_rate;
