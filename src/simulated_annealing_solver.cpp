@@ -28,14 +28,8 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
 
     auto max = std::max_element(deltas.begin(), deltas.end()); // Ensure max is non-negative
     double t = -static_cast<double>(*max) / log(starting_probabilty);
-    auto new_cooling_rate = std::pow((1.0 / t), (1.0 / max_iter));
-
-    if (auto strat = dynamic_cast<GeometricCoolingStrategy*>(cooling_strategy_.get()); strat != nullptr) {
-        strat->setCoolingRate(new_cooling_rate);
-    } else {
-        std::cerr << "Cooling strategy is not GeometricCoolingStrategy, cannot set cooling rate." << std::endl;
-        return global_best;
-    }
+    
+    cooling_strategy_->setCoolingRate(t, max_iter);
 
     // end self-tuning phase
 

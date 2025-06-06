@@ -1,4 +1,5 @@
 #include <memory>
+#include <math.h>
 
 #include "knapsack_problem_instance.hpp"
 #include "knapsack_solution_instance.hpp"
@@ -14,6 +15,7 @@ class CoolingStrategy {
      * @param prev_t the previous temperature
      */
     virtual double next(double prev_t) = 0;
+    virtual void setCoolingRate(double t_0, int max_iter) = 0;
 };
 
 class SimulatedAnnealingSolver {
@@ -36,6 +38,9 @@ class LinearCoolingStrategy : public CoolingStrategy {
    public:
     LinearCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
     double next(double prev_t) override { return prev_t - cooling_rate; }
+    void setCoolingRate(double t_0, int max_iter) override {
+        cooling_rate = (t_0 - 1.0) / max_iter;
+    }
 
    private:
     double cooling_rate;
@@ -50,8 +55,8 @@ class GeometricCoolingStrategy : public CoolingStrategy {
    public:
     GeometricCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
     double next(double prev_t) override { return prev_t * cooling_rate; }
-    void setCoolingRate(double new_rate) {
-        cooling_rate = new_rate;
+    void setCoolingRate(double t_0, int max_iter) override {
+        cooling_rate = std::pow((1.0 / t_0), (1.0 / max_iter));
     }
 
    private:
@@ -67,6 +72,9 @@ class LogarithmicCoolingStrategy : public CoolingStrategy {
    public:
     LogarithmicCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
     double next(double prev_t) override { return prev_t / (1 + cooling_rate * prev_t); }
+    void setCoolingRate(double t_0, int max_iter) override {
+        cooling_rate = (t_0 - 1.0) / (max_iter * t_0);
+    }
 
    private:
     double cooling_rate;
