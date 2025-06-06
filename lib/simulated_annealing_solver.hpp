@@ -61,14 +61,13 @@ class GeometricCoolingStrategy : public CoolingStrategy {
 /**
  * Logarithmic cooling strategy
  * The temperature is decreased by a constant rate
- * t_{i+1} = t_i / (1 + lambda * cooling_rate)
+ * t_{i+1} = t_i / (1 + t_i * cooling_rate)
  */
 class LogarithmicCoolingStrategy : public CoolingStrategy {
    public:
-    LogarithmicCoolingStrategy(double lambda) : lambda(lambda) {}
-    double next(double prev_t) override { return prev_t / (1 + lambda * prev_t); }
+    LogarithmicCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
+    double next(double prev_t) override { return prev_t / (1 + cooling_rate * prev_t); }
 
    private:
     double cooling_rate;
-    double lambda;
 };
