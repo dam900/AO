@@ -33,9 +33,26 @@ int main(int argc, char* argv[]) {
     try {
         std::vector<std::string> paths = {
             "knapPI_1_100_1000_1",
+            "knapPI_1_200_1000_1",
             "knapPI_1_500_1000_1",
-            "knapPI_2_2000_1000_1"
-            // Dodaj więcej ścieżek, jeśli potrzebujesz
+            "knapPI_1_1000_1000_1",
+            "knapPI_1_2000_1000_1",
+            "knapPI_1_5000_1000_1",
+            "knapPI_1_10000_1000_1",
+            "knapPI_2_100_1000_1",
+            "knapPI_2_200_1000_1",
+            "knapPI_2_500_1000_1",
+            "knapPI_2_1000_1000_1",
+            "knapPI_2_2000_1000_1",
+            "knapPI_2_5000_1000_1",
+            "knapPI_2_10000_1000_1",
+            "knapPI_3_100_1000_1",
+            "knapPI_3_200_1000_1",
+            "knapPI_3_500_1000_1",
+            "knapPI_3_1000_1000_1",
+            "knapPI_3_2000_1000_1",
+            "knapPI_3_5000_1000_1",
+            "knapPI_3_10000_1000_1",
         };
     
         int max_iter = 1000;
@@ -43,15 +60,16 @@ int main(int argc, char* argv[]) {
     
         for (auto& path : paths) {
 
-            std::string optimum_path = path + "-optimum";
+            std::string data_path = "large_scale/" + path;
+            std::string optimum_path = "large_scale-optimum/" + path;
 
             int optimum = read_optimum(optimum_path);
-    
-            std::cout << "Processing path: " << path << std::endl;
-    
+
+            std::cout << "Processing path: " << data_path << std::endl;
+
             KnapsackProblemInstance bp = KnapsackProblemInstance{};
-            bp.load(path);
-    
+            bp.load(data_path);
+            
             auto capacity = bp.capacity;
             
             for (const auto& strategy_type : {"Geometric", "Linear"}) {

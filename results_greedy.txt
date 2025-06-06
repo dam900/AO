@@ -1,0 +1,378 @@
+Path: knapPI_1_100_1000_1
+Cooling strategy: Geometric
+Best solution found: 8900
+Best solution weight: 981
+Is under the weight limit: True
+By how much: 14
+Optimal solution: 9147
+Difference from optimum: 247
+
+Path: knapPI_1_100_1000_1
+Cooling strategy: Linear
+Best solution found: 8900
+Best solution weight: 981
+Is under the weight limit: True
+By how much: 14
+Optimal solution: 9147
+Difference from optimum: 247
+
+Path: knapPI_1_200_1000_1
+Cooling strategy: Geometric
+Best solution found: 11227
+Best solution weight: 981
+Is under the weight limit: True
+By how much: 27
+Optimal solution: 11238
+Difference from optimum: 11
+
+Path: knapPI_1_200_1000_1
+Cooling strategy: Linear
+Best solution found: 11227
+Best solution weight: 981
+Is under the weight limit: True
+By how much: 27
+Optimal solution: 11238
+Difference from optimum: 11
+
+Path: knapPI_1_500_1000_1
+Cooling strategy: Geometric
+Best solution found: 28834
+Best solution weight: 2528
+Is under the weight limit: True
+By how much: 15
+Optimal solution: 28857
+Difference from optimum: 23
+
+Path: knapPI_1_500_1000_1
+Cooling strategy: Linear
+Best solution found: 28834
+Best solution weight: 2528
+Is under the weight limit: True
+By how much: 15
+Optimal solution: 28857
+Difference from optimum: 23
+
+Path: knapPI_1_1000_1000_1
+Cooling strategy: Geometric
+Best solution found: 54386
+Best solution weight: 4991
+Is under the weight limit: True
+By how much: 11
+Optimal solution: 54503
+Difference from optimum: 117
+
+Path: knapPI_1_1000_1000_1
+Cooling strategy: Linear
+Best solution found: 54386
+Best solution weight: 4991
+Is under the weight limit: True
+By how much: 11
+Optimal solution: 54503
+Difference from optimum: 117
+
+Path: knapPI_1_2000_1000_1
+Cooling strategy: Geometric
+Best solution found: 110547
+Best solution weight: 9996
+Is under the weight limit: True
+By how much: 15
+Optimal solution: 110625
+Difference from optimum: 78
+
+Path: knapPI_1_2000_1000_1
+Cooling strategy: Linear
+Best solution found: 110547
+Best solution weight: 9996
+Is under the weight limit: True
+By how much: 15
+Optimal solution: 110625
+Difference from optimum: 78
+
+Path: knapPI_1_5000_1000_1
+Cooling strategy: Geometric
+Best solution found: 276379
+Best solution weight: 25008
+Is under the weight limit: True
+By how much: 8
+Optimal solution: 276457
+Difference from optimum: 78
+
+Path: knapPI_1_5000_1000_1
+Cooling strategy: Linear
+Best solution found: 276379
+Best solution weight: 25008
+Is under the weight limit: True
+By how much: 8
+Optimal solution: 276457
+Difference from optimum: 78
+
+Path: knapPI_1_10000_1000_1
+Cooling strategy: Geometric
+Best solution found: 563605
+Best solution weight: 49876
+Is under the weight limit: True
+By how much: 1
+Optimal solution: 563647
+Difference from optimum: 42
+
+Path: knapPI_1_10000_1000_1
+Cooling strategy: Linear
+Best solution found: 563605
+Best solution weight: 49876
+Is under the weight limit: True
+By how much: 1
+Optimal solution: 563647
+Difference from optimum: 42
+
+Path: knapPI_2_100_1000_1
+Cooling strategy: Geometric
+Best solution found: 1487
+Best solution weight: 983
+Is under the weight limit: True
+By how much: 12
+Optimal solution: 1514
+Difference from optimum: 27
+
+Path: knapPI_2_100_1000_1
+Cooling strategy: Linear
+Best solution found: 1487
+Best solution weight: 983
+Is under the weight limit: True
+By how much: 12
+Optimal solution: 1514
+Difference from optimum: 27
+
+Path: knapPI_2_200_1000_1
+Cooling strategy: Geometric
+Best solution found: 1604
+Best solution weight: 1004
+Is under the weight limit: True
+By how much: 4
+Optimal solution: 1634
+Difference from optimum: 30
+
+Path: knapPI_2_200_1000_1
+Cooling strategy: Linear
+Best solution found: 1604
+Best solution weight: 1004
+Is under the weight limit: True
+By how much: 4
+Optimal solution: 1634
+Difference from optimum: 30
+
+Path: knapPI_2_500_1000_1
+Cooling strategy: Geometric
+Best solution found: 4552
+Best solution weight: 2538
+Is under the weight limit: True
+By how much: 5
+Optimal solution: 4566
+Difference from optimum: 14
+
+Path: knapPI_2_500_1000_1
+Cooling strategy: Linear
+Best solution found: 4552
+Best solution weight: 2538
+Is under the weight limit: True
+By how much: 5
+Optimal solution: 4566
+Difference from optimum: 14
+
+Path: knapPI_2_1000_1000_1
+Cooling strategy: Geometric
+Best solution found: 9051
+Best solution weight: 5002
+Is under the weight limit: False
+By how much: 0
+Optimal solution: 9052
+Difference from optimum: 1
+
+Path: knapPI_2_1000_1000_1
+Cooling strategy: Linear
+Best solution found: 9051
+Best solution weight: 5002
+Is under the weight limit: False
+By how much: 0
+Optimal solution: 9052
+Difference from optimum: 1
+
+Path: knapPI_2_2000_1000_1
+Cooling strategy: Geometric
+Best solution found: 18038
+Best solution weight: 10010
+Is under the weight limit: True
+By how much: 1
+Optimal solution: 18051
+Difference from optimum: 13
+
+Path: knapPI_2_2000_1000_1
+Cooling strategy: Linear
+Best solution found: 18038
+Best solution weight: 10010
+Is under the weight limit: True
+By how much: 1
+Optimal solution: 18051
+Difference from optimum: 13
+
+Path: knapPI_2_5000_1000_1
+Cooling strategy: Geometric
+Best solution found: 44351
+Best solution weight: 25016
+Is under the weight limit: False
+By how much: 0
+Optimal solution: 44356
+Difference from optimum: 5
+
+Path: knapPI_2_5000_1000_1
+Cooling strategy: Linear
+Best solution found: 44351
+Best solution weight: 25016
+Is under the weight limit: False
+By how much: 0
+Optimal solution: 44356
+Difference from optimum: 5
+
+Path: knapPI_2_10000_1000_1
+Cooling strategy: Geometric
+Best solution found: 90200
+Best solution weight: 49877
+Is under the weight limit: False
+By how much: 0
+Optimal solution: 90204
+Difference from optimum: 4
+
+Path: knapPI_2_10000_1000_1
+Cooling strategy: Linear
+Best solution found: 90200
+Best solution weight: 49877
+Is under the weight limit: False
+By how much: 0
+Optimal solution: 90204
+Difference from optimum: 4
+
+Path: knapPI_3_100_1000_1
+Cooling strategy: Geometric
+Best solution found: 2381
+Best solution weight: 981
+Is under the weight limit: True
+By how much: 16
+Optimal solution: 2397
+Difference from optimum: 16
+
+Path: knapPI_3_100_1000_1
+Cooling strategy: Linear
+Best solution found: 2381
+Best solution weight: 981
+Is under the weight limit: True
+By how much: 16
+Optimal solution: 2397
+Difference from optimum: 16
+
+Path: knapPI_3_200_1000_1
+Cooling strategy: Geometric
+Best solution found: 2649
+Best solution weight: 949
+Is under the weight limit: True
+By how much: 48
+Optimal solution: 2697
+Difference from optimum: 48
+
+Path: knapPI_3_200_1000_1
+Cooling strategy: Linear
+Best solution found: 2649
+Best solution weight: 949
+Is under the weight limit: True
+By how much: 48
+Optimal solution: 2697
+Difference from optimum: 48
+
+Path: knapPI_3_500_1000_1
+Cooling strategy: Geometric
+Best solution found: 7098
+Best solution weight: 2498
+Is under the weight limit: True
+By how much: 19
+Optimal solution: 7117
+Difference from optimum: 19
+
+Path: knapPI_3_500_1000_1
+Cooling strategy: Linear
+Best solution found: 7098
+Best solution weight: 2498
+Is under the weight limit: True
+By how much: 19
+Optimal solution: 7117
+Difference from optimum: 19
+
+Path: knapPI_3_1000_1000_1
+Cooling strategy: Geometric
+Best solution found: 14374
+Best solution weight: 4974
+Is under the weight limit: True
+By how much: 16
+Optimal solution: 14390
+Difference from optimum: 16
+
+Path: knapPI_3_1000_1000_1
+Cooling strategy: Linear
+Best solution found: 14374
+Best solution weight: 4974
+Is under the weight limit: True
+By how much: 16
+Optimal solution: 14390
+Difference from optimum: 16
+
+Path: knapPI_3_2000_1000_1
+Cooling strategy: Geometric
+Best solution found: 28827
+Best solution weight: 9727
+Is under the weight limit: True
+By how much: 92
+Optimal solution: 28919
+Difference from optimum: 92
+
+Path: knapPI_3_2000_1000_1
+Cooling strategy: Linear
+Best solution found: 28827
+Best solution weight: 9727
+Is under the weight limit: True
+By how much: 92
+Optimal solution: 28919
+Difference from optimum: 92
+
+Path: knapPI_3_5000_1000_1
+Cooling strategy: Geometric
+Best solution found: 72446
+Best solution weight: 24746
+Is under the weight limit: True
+By how much: 59
+Optimal solution: 72505
+Difference from optimum: 59
+
+Path: knapPI_3_5000_1000_1
+Cooling strategy: Linear
+Best solution found: 72446
+Best solution weight: 24746
+Is under the weight limit: True
+By how much: 59
+Optimal solution: 72505
+Difference from optimum: 59
+
+Path: knapPI_3_10000_1000_1
+Cooling strategy: Geometric
+Best solution found: 146888
+Best solution weight: 49488
+Is under the weight limit: True
+By how much: 31
+Optimal solution: 146919
+Difference from optimum: 31
+
+Path: knapPI_3_10000_1000_1
+Cooling strategy: Linear
+Best solution found: 146888
+Best solution weight: 49488
+Is under the weight limit: True
+By how much: 31
+Optimal solution: 146919
+Difference from optimum: 31
+
