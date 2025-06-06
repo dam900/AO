@@ -36,12 +36,14 @@ int main(int argc, char* argv[]) {
         int optimum;
         double initial_prob;
         std::string path;
+        ResultsSaver<double> saver;
         
         if (argc < 4) {
             path = "/home/damian/Downloads/instances_01_KP/large_scale/knapPI_1_500_1000_1";
             max_iter = 1000;
             initial_prob = 0.8;
             optimum = read_optimum("/home/damian/Downloads/instances_01_KP/large_scale-optimum/knapPI_1_500_1000_1");
+            saver = {"./results.csv"};
         } else {
             max_iter = std::stoi(argv[1]);
             initial_prob = std::stod(argv[2]);
@@ -50,8 +52,9 @@ int main(int argc, char* argv[]) {
             auto last_slash = path.find_last_of('/');
             std::string filename = (last_slash != std::string::npos) ? path.substr(last_slash + 1) : path;
             std::string dir = (last_slash != std::string::npos) ? path.substr(0, last_slash) : "";
-
+            
             optimum = read_optimum(dir.append("-optimum/").append(filename));
+            saver = {filename.append("-results.csv")};
         }
 
         std::cout << "Using path: " << path << std::endl;
@@ -63,10 +66,11 @@ int main(int argc, char* argv[]) {
         KnapsackProblemInstance bp = KnapsackProblemInstance{};
         bp.load(path);
 
+
         auto cooling_strategy = std::make_unique<GeometricCoolingStrategy>(1);
         auto capacity = bp.capacity;
 
-        SimulatedAnnealingSolver solver(std::move(cooling_strategy), bp);
+        SimulatedAnnealingSolver solver(std::move(cooling_strategy), bp, saver);
         auto solution = solver.solve(max_iter, initial_prob);
 
         std::cout << "Best solution found: " << solution.cost() << std::endl;

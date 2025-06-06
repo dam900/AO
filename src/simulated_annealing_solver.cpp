@@ -53,8 +53,11 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
             global_best_cost = current_cost;
         }
 
+        results_saver_.put({i, current_cost});
+
         t = cooling_strategy_->next(t);
     }
 
+    results_saver_.save();
     return global_best;
 }

@@ -3,6 +3,7 @@
 
 #include "knapsack_problem_instance.hpp"
 #include "knapsack_solution_instance.hpp"
+#include "results_saver.hpp"
 
 /**
  * Interface for cooling strategies
@@ -20,13 +21,14 @@ class CoolingStrategy {
 
 class SimulatedAnnealingSolver {
    public:
-    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance) {}
+    SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance, ResultsSaver<double> saver) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance), results_saver_(saver) {}
     KnapsackSolutionInstance solve(int max_iter, double inital_temp);
 
    private:
     KnapsackProblemInstance pinstance_;
     KnapsackSolutionInstance sinstance_;
     std::unique_ptr<CoolingStrategy> cooling_strategy_;
+    ResultsSaver<double> results_saver_;
 };
 
 /**
