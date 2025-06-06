@@ -7,7 +7,7 @@
 
 #define SELF_TUNE_ITERATIONS 100
 
-KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double starting_probabilty) {
+KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double starting_probabilty, bool is_greedy) {
     auto best = sinstance_;
     best.initialize();
     auto global_best = best;
@@ -20,7 +20,7 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
     std::vector<int> deltas = std::vector<int>(SELF_TUNE_ITERATIONS, 0);
 
     for (size_t i = 0; i < SELF_TUNE_ITERATIONS; i++) {
-        self_tune_sol.make_change();
+        self_tune_sol.make_change(is_greedy);
         auto current_cost = self_tune_sol.cost();
         auto delta = current_cost - best_cost;
         deltas[i] = std::abs(delta);
@@ -31,16 +31,23 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
     auto new_cooling_rate = std::pow((1.0 / t), (1.0 / max_iter));
 
     if (auto strat = dynamic_cast<GeometricCoolingStrategy*>(cooling_strategy_.get()); strat != nullptr) {
-        strat->setCoolingRate(new_cooling_rate);
+        double new_cooling_rate_geometric = std::pow((1.0 / t), (1.0 / max_iter));
+        strat->setCoolingRate(new_cooling_rate_geometric);
+    } else if (auto strat = dynamic_cast<LinearCoolingStrategy*>(cooling_strategy_.get()); strat != nullptr) {
+        double new_cooling_rate_linear = (t - 1.0) / max_iter;
+        strat->setCoolingRate(new_cooling_rate_linear);
+    } else if (auto strat = dynamic_cast<LogarithmicCoolingStrategy*>(cooling_strategy_.get()); strat != nullptr) {
+        double new_ti_logarithmic = (t - 1.0) / (max_iter * t);
+        strat->setCoolingRate(new_ti_logarithmic);
     } else {
-        std::cerr << "Cooling strategy is not GeometricCoolingStrategy, cannot set cooling rate." << std::endl;
+        std::cerr << "Cooling strategy type not recognized or cannot set cooling rate." << std::endl;
         return global_best;
     }
 
     // end self-tuning phase
 
     for (size_t i = 0; i <= max_iter; i++) {
-        best.make_change();
+        best.make_change(is_greedy);
 
         auto current_cost = best.cost();
         auto delta = current_cost - best_cost;

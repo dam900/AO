@@ -10,6 +10,9 @@ Makefile
 knapPI_1_100_1000_1
 knapPI_1_500_1000_1
 knapPI_2_2000_1000_1
+large_scale
+large_scale-optimum
+
 
 
 # Ignore compiled object files

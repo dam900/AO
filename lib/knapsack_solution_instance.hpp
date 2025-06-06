@@ -10,7 +10,7 @@ class KnapsackSolutionInstance {
    public:
     KnapsackSolutionInstance(KnapsackProblemInstance pinstance) : pinstance_(pinstance) {};
     void revert(); 
-    void make_change();
+    void make_change(bool is_greedy = false);
     int cost();
     int weight();
     std::vector<bool> getSol();

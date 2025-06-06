@@ -19,7 +19,7 @@ class CoolingStrategy {
 class SimulatedAnnealingSolver {
    public:
     SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance) {}
-    KnapsackSolutionInstance solve(int max_iter, double inital_temp);
+    KnapsackSolutionInstance solve(int max_iter, double inital_temp, bool is_greedy = false);
 
    private:
     KnapsackProblemInstance pinstance_;
@@ -36,6 +36,9 @@ class LinearCoolingStrategy : public CoolingStrategy {
    public:
     LinearCoolingStrategy(double cooling_rate) : cooling_rate(cooling_rate) {}
     double next(double prev_t) override { return prev_t - cooling_rate; }
+    void setCoolingRate(double new_rate) {
+        cooling_rate = new_rate;
+    }
 
    private:
     double cooling_rate;
@@ -62,13 +65,16 @@ class GeometricCoolingStrategy : public CoolingStrategy {
  * Logarithmic cooling strategy
  * The temperature is decreased by a constant rate
  * t_{i+1} = t_i / (1 + lambda * cooling_rate)
+ * (Based on the next method: t_{i+1} = t_i / (1 + ti * t_i), so 'ti' is 'lambda' and 't_i' is 'cooling_rate')
  */
 class LogarithmicCoolingStrategy : public CoolingStrategy {
-   public:
-    LogarithmicCoolingStrategy(double lambda) : lambda(lambda) {}
-    double next(double prev_t) override { return prev_t / (1 + lambda * prev_t); }
-
-   private:
-    double cooling_rate;
-    double lambda;
-};
+    public:
+     LogarithmicCoolingStrategy(double ti_param) : ti(ti_param) {}
+     double next(double prev_t) override { return prev_t / (1 + ti * prev_t); }
+     void setCoolingRate(double new_ti_param) {
+         ti = new_ti_param;
+     }
+ 
+    private:
+     double ti;
+ };
