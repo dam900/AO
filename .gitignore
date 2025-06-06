@@ -33,3 +33,5 @@ BackpackProject
 
 # Ignore editor-specific files
 .vscode/
+
+*results.csv
