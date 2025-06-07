@@ -7,7 +7,7 @@
 
 #define SELF_TUNE_ITERATIONS 100
 
-KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double starting_probabilty) {
+KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double starting_probabilty, bool is_greedy) {
     auto best = sinstance_;
     best.initialize();
     auto global_best = best;
@@ -20,7 +20,7 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
     std::vector<int> deltas = std::vector<int>(SELF_TUNE_ITERATIONS, 0);
 
     for (size_t i = 0; i < SELF_TUNE_ITERATIONS; i++) {
-        self_tune_sol.make_change();
+        self_tune_sol.make_change(is_greedy);
         auto current_cost = self_tune_sol.cost();
         auto delta = current_cost - best_cost;
         deltas[i] = std::abs(delta);
@@ -34,7 +34,7 @@ KnapsackSolutionInstance SimulatedAnnealingSolver::solve(int max_iter, double st
     // end self-tuning phase
 
     for (size_t i = 0; i <= max_iter; i++) {
-        best.make_change();
+        best.make_change(is_greedy);
 
         auto current_cost = best.cost();
         auto delta = current_cost - best_cost;

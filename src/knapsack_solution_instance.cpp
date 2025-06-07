@@ -54,7 +54,7 @@ void KnapsackSolutionInstance::revert() {
     std::copy(prev_solution_.begin(), prev_solution_.end(), std::back_inserter(csol_));
 }
 
-void KnapsackSolutionInstance::make_change() {
+void KnapsackSolutionInstance::make_change(bool is_greedy) {
     std::copy(csol_.begin(), csol_.end(), std::back_inserter(prev_solution_));
 
     std::random_device rd;
@@ -65,67 +65,69 @@ void KnapsackSolutionInstance::make_change() {
     auto sorted_items = pinstance_.sorted_by_ratio();
     int current_weight = weight();
 
-    double action_prob = prob_dist(gen);
+    for (const auto& item : sorted_items) {
+        int item_id = item.first;
+        int item_weight = pinstance_.getItemWeight(item_id);
 
-    if (action_prob <= 0.5) {
-        double add_prob = prob_dist(gen);
-
-        if (add_prob <= 0.5) {
-            for (const auto& item : sorted_items) {
-                int item_id = item.first;
-                int item_weight = pinstance_.getItemWeight(item_id);
-
-                if (!csol_[item_id] && current_weight + item_weight <= pinstance_.capacity) {
-                    csol_[item_id] = true;
-                    current_weight += item_weight;
-
-                }
-            }
-        } else {
-            for (size_t i = 0; i < 100; ++i) {
-                int random_index = dis(gen);
-                int item_weight = pinstance_.getItemWeight(random_index);
-
-                if (!csol_[random_index] && current_weight + item_weight <= pinstance_.capacity) {
-                    csol_[random_index] = true;
-                    current_weight += item_weight;
-
-                }
-            }
+        if (!csol_[item_id] && current_weight + item_weight <= pinstance_.capacity) {
+            csol_[item_id] = true;
+            current_weight += item_weight;
+            return;
         }
-    } else {
-        std::vector<int> selected_items;
-        for (size_t i = 0; i < csol_.size(); ++i) {
-            if (csol_[i]) {
-                selected_items.push_back(i);
-            }
-        }
+    }
 
-        if (!selected_items.empty()) {
-            double remove_prob = prob_dist(gen);
-
-            if (remove_prob <= 0.5) {
-                int worst_item_id = selected_items[0];
-                double worst_ratio = static_cast<double>(pinstance_.getItemPrice(worst_item_id)) /
-                                     pinstance_.getItemWeight(worst_item_id);
-
-                for (const auto& item_id : selected_items) {
-                    double ratio = static_cast<double>(pinstance_.getItemPrice(item_id)) /
-                                   pinstance_.getItemWeight(item_id);
+    if (is_greedy) {
+            int worst_item_id = -1;
+            double worst_ratio = std::numeric_limits<double>::max();
+        
+            for (size_t i = 0; i < csol_.size(); ++i) {
+                if (csol_[i]) {
+                    double ratio = static_cast<double>(pinstance_.getItemPrice(i)) / pinstance_.getItemWeight(i);
                     if (ratio < worst_ratio) {
-                        worst_item_id = item_id;
+                        worst_item_id = i;
                         worst_ratio = ratio;
                     }
                 }
-
+            }
+        
+            if (worst_item_id != -1) {
                 csol_[worst_item_id] = false;
                 current_weight -= pinstance_.getItemWeight(worst_item_id);
-            } else {
-                std::uniform_int_distribution<> remove_dis(0, selected_items.size() - 1);
-                int random_item_id = selected_items[remove_dis(gen)];
+            }
+        
+            for (const auto& item : sorted_items) {
+                int item_id = item.first;
+                int item_weight = pinstance_.getItemWeight(item_id);
+        
+                if (item_id != worst_item_id && !csol_[item_id] && current_weight + item_weight <= pinstance_.capacity) {
+                    csol_[item_id] = true;
+                    current_weight += item_weight;
+                }
+            }
 
-                csol_[random_item_id] = false;
-                current_weight -= pinstance_.getItemWeight(random_item_id);
+    } 
+    
+    else {
+        std::uniform_int_distribution<> remove_dis(0, csol_.size() - 1);
+        int random_item_id = remove_dis(gen);
+
+        if (csol_[random_item_id]) {
+            csol_[random_item_id] = false;
+            current_weight -= pinstance_.getItemWeight(random_item_id);
+        }
+    
+
+        for (int iteration = 0; iteration < 100; ++iteration) {
+            int random_index = dis(gen);
+            int item_weight = pinstance_.getItemWeight(random_index);
+        
+            if (!csol_[random_index] && current_weight + item_weight <= pinstance_.capacity) {
+                csol_[random_index] = true;
+                current_weight += item_weight;
+            }
+
+            if (current_weight == pinstance_.capacity) {
+                break;
             }
         }
     }

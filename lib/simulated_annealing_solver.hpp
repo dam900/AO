@@ -22,7 +22,7 @@ class CoolingStrategy {
 class SimulatedAnnealingSolver {
    public:
     SimulatedAnnealingSolver(std::unique_ptr<CoolingStrategy> cooling_strategy, KnapsackProblemInstance pinstance, ResultsSaver<double> saver) : cooling_strategy_(std::move(cooling_strategy)), pinstance_(pinstance), sinstance_(pinstance), results_saver_(saver) {}
-    KnapsackSolutionInstance solve(int max_iter, double inital_temp);
+    KnapsackSolutionInstance solve(int max_iter, double inital_temp, bool is_greedy);
 
    private:
     KnapsackProblemInstance pinstance_;

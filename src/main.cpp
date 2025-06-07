@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
         auto capacity = bp.capacity;
 
         SimulatedAnnealingSolver solver(std::move(cooling_strategy), bp, saver);
-        auto solution = solver.solve(max_iter, initial_prob);
+        auto solution = solver.solve(max_iter, initial_prob, true);
 
         std::cout << "Best solution found: " << solution.cost() << std::endl;
         std::cout << "Best solution weight: " << solution.weight() << std::endl;
